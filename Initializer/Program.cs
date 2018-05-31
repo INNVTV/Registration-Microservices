@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Data.SqlClient;
+using System.Text;
+using System.Threading;
 
 namespace initializer
 {
@@ -10,8 +13,17 @@ namespace initializer
         {
             Console.WriteLine("Initializing Registarion Microservices");
             Console.WriteLine();
-            Console.WriteLine("Checking resources....");
 
+            Console.WriteLine("Connecting to SQL....");
+
+            #region Sql Connection
+
+                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+                builder.DataSource = "";
+
+            #endregion
+
+            Console.WriteLine("Checking resources....");
 
         }
     }
