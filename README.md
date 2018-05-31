@@ -1,4 +1,4 @@
-# registration-microservices
+# Registration Microservices
 Dockerized microservices using node.js, .net core and Azure.
 
 ## Installation
