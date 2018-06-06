@@ -12,7 +12,7 @@ The goal with this project is to create a completly standalone set of components
 Registration Microservices uses Docker Compose to deploy images associated with each project. Each project has an associated Dockerfile.
 
 ## Configuration
-Docker Secrets and runtime enviornment variables.
+Docker Secrets and runtime enviornment variables. Production solutions should consider RPC solutions such as Envoy or gRPC in place of Nginx.
 
 ## Projects (Public)
 
