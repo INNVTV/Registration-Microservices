@@ -1,17 +1,19 @@
-FROM microsoft/aspnetcore-build:2.0 AS build-env
-WORKDIR /app
+FROM node:alpine
 
-# Copy csproj and restore as distinct layers
-COPY *.csproj ./
-RUN dotnet restore
+# Create app directory
+WORKDIR /usr/src/app
 
-# Copy everything else and build
-COPY . ./
-RUN dotnet publish -c Release -o out
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
 
-# Build runtime image
-FROM microsoft/aspnetcore:2.0
-WORKDIR /app
-COPY --from=build-env /app/out .
+RUN npm install
+# If you are building your code for production
+# RUN npm install --only=production
 
-ENTRYPOINT ["dotnet", "initializer.dll" ]
+# Bundle app source
+COPY . .
+
+EXPOSE 80
+CMD [ "node", "app.js" ]

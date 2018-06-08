@@ -11,14 +11,14 @@ services:
   mongodb:
     image: mongo:latest
     container_name: "registration_db"
-    environment:
-     - MONGO_DATA_DIR=/data/db
-     - MONGO_LOG_DIR=/dev/null
-     - MONGO_USER="user"
-     - MONGO_PASS="pass"
-    volumes:
-     - ./data/db:/data/db
+    #environment:
+    # - MONGO_DATA_DIR=/data/db
+    # - MONGO_LOG_DIR=/dev/null
+    # - MONGO_USER="user"
+    # - MONGO_PASS="pass"
+    #volumes:
+    # - ./data/db:/data/db
     ports:
      - 27017:27017
-    command: mongodb --smallfiles --logpath=/dev/null # --quiet
+    #command: mongodb --smallfiles --logpath=/dev/null # --quiet
   
