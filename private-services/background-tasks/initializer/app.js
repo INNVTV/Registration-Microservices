@@ -1,25 +1,23 @@
 /*jshint esversion: 6 */
 
 const sleep = require('system-sleep');
-
 const MongoClient = require('mongodb').MongoClient;
 
 console.log("Initializer: Connecting to MongoDB instance...");
-
 const url = "mongodb://mongodb:27017/registrations"; //<-- replace 'localhost' with 'mongodb' - ie: The name of the docker-compose service
 
 console.log("Initializer: Sleeping for 10 seconds to allow for MongoDB to allow for connections...");
 sleep(10000);
-console.log('Initializer: AWAKE!');
+console.log('Initializer: Awake.');
 
 MongoClient.connect(url, function(err, db){
     if(err){
-        console.log("Initializer: Error: " + err);
+        console.log("Initializer: Mongo connection error: " + err);
     }
     else{
 
         console.log("Initializer: Connected!");
-        console.log("Initializer: Creating Collections...");
+        console.log("Initializer: Creating DB & Collections...");
         const dbo = db.db("registrations");
 
         let createNewCollection = function(){
@@ -27,11 +25,10 @@ MongoClient.connect(url, function(err, db){
 
                 //Create the 'new' collection:
                 dbo.createCollection("new", function(err, res){
-                    if (err) reject("Initializer: 'new' collection rejected: " + err);
-                    console.log("Initializer: 'new' collection created!");
+                    if (err) reject("Initializer: 'new' collection creation error: " + err);
 
                     //resolve the promise:
-                    resolve("'new' collection created!");
+                    resolve("Initializer: 'new' collection created!");
                 });
 
             });
@@ -42,11 +39,10 @@ MongoClient.connect(url, function(err, db){
 
                 //Create the 'processed' collection:
                 dbo.createCollection("processed", function(err, res){
-                    if (err) reject("Initializer: 'processed' collection rejected: " + err);
-                    console.log("Initializer: 'processed' collection created!");
+                    if (err) reject("Initializer: 'processed' collection creation error: " + err);
 
                     //resolve the promise:
-                    resolve("'processed' collection created!");
+                    resolve("Initializer: 'processed' collection created!");
                 });
 
             });
@@ -57,11 +53,10 @@ MongoClient.connect(url, function(err, db){
 
                 //Create the 'rejected' collection:
                 dbo.createCollection("rejected", function(err, res){
-                    if (err) reject("Initializer: 'rejected' collection rejected: " + err);
-                    console.log("Initializer: 'rejected' collection created!");
+                    if (err) reject("Initializer: 'rejected' collection creation error: " + err);
 
                     //resolve the promise:
-                    resolve("'rejected' collection created!");
+                    resolve("Initializer: 'rejected' collection created!");
                 });
 
             });
@@ -76,11 +71,14 @@ MongoClient.connect(url, function(err, db){
 
 
         //Order the promises and initiate:
-        createNewCollection().then(function(){
+        createNewCollection().then(function(result){
+            console.log(result);
             return createProcessedCollection();
-        }).then(function(){
+        }).then(function(result){
+            console.log(result);
             return createRejectedCollection();
-        }).then(function(){
+        }).then(function(result){
+            console.log(result);
             return closeConnection();
         });
         
