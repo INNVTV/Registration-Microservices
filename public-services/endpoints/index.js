@@ -15,3 +15,5 @@ app.get('/', (req, res) => {
 app.post('/api/v1/register', (req, res) => {
     validation.validateRegistration();
 });
+
+app.listen(3000, () => console.log("'public-endpoints' listening on port 3000"));
