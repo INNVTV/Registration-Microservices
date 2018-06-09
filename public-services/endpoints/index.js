@@ -4,11 +4,16 @@ const express = require('express');
 const app = express();
 
 const registrationModel = require('./models/registration');
+
 const validation = require('./validation');
+
+const DataConnection = require('./dataConnection');
+const dataConnection = new DataConnection();
 
 app.use(express.json());
 
 app.get('/', (req, res) => {
+    dataConnection.insertNewRegistration('Kazual');
     res.send('Welcome to the public registration service.');
 });
 
