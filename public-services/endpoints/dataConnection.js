@@ -1,7 +1,7 @@
 /*jshint esversion: 6 */
 
 const MongoClient = require('mongodb').MongoClient;
-const url = "mongodb://mongodb:27017/registrations"; //<-- replace 'localhost' with 'mongodb' - ie: The name of the docker-compose service
+const url = require('./config/config.js').DB_URI;
 
 class DataConnection {
 
@@ -44,7 +44,7 @@ class DataConnection {
             }
         });
     }
-    
+
 }
 
 module.exports = DataConnection;

@@ -2,9 +2,9 @@
 
 const sleep = require('system-sleep');
 const MongoClient = require('mongodb').MongoClient;
+const url = require('./config/config.js').DB_URI;
 
 console.log("Initializer: Connecting to MongoDB instance...");
-const url = "mongodb://mongodb:27017/registrations"; //<-- replace 'localhost' with 'mongodb' - ie: The name of the docker-compose service
 
 console.log("Initializer: Sleeping for 10 seconds to allow for MongoDB to allow for connections...");
 sleep(10000);
