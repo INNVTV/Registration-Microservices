@@ -30,4 +30,20 @@ services:
     ports:
      - 27017:27017
     #command: mongodb --smallfiles --logpath=/dev/null # --quiet
+
+  nginx:
+    image: nginx:latest
+    ports:
+     - "8080:8080"
+    volumes:
+     - ./web/public:/srv/www/static
+     - ./default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+     - mongodb
+     - initializer
+     - worker
+     - admin
+     - public-endpoints
+     - private-endpoints
+     - public-webite
   
