@@ -25,12 +25,24 @@ namespace Admin
                 .AddEnvironmentVariables(); //<-- Allows for Docker Env Variables
             Configuration = builder.Build();
 
-            /* Docker Compose Environment Settings:
-                
+            /* Injecting Environment Variables with Docker:
+            ------------------------------------------------------------------
+
+            Dockerfile:
+                ?
+
+            Docker Build:
+                ?
+
+            Docker Run:
+                -e Settings:MongoDbUri=mongodb://dockerrun:27017/registrations
+
+            docker-compose:                
                 environment:
-                - Settings:MongoDbUri=mongodb://mongodb:27017/registrations;    
-                       
-            */
+                 - Settings:ApplicationName=From Compose
+                 - Settings:MongoDbUri=mongodb://mongodb:27017/registrations   
+
+            ------------------------------------------------------------------*/
 
             AppSettings.ApplicationName = Configuration["Settings:ApplicationName"]; //<-- pulls from json settings
             AppSettings.MongoDbUri = Configuration["Settings:MongoDbUri"]; //<-- pulls from json settings
@@ -69,7 +81,7 @@ namespace Admin
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection(); //<-- Can cause errors with local docker-compose development
             app.UseStaticFiles();
             app.UseCookiePolicy();
             
