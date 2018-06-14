@@ -10,6 +10,7 @@ services:
     depends_on:
      - mongodb
 
+
   public-endpoints:
     build: public-services/endpoints
     container_name: "public-endpoints"
@@ -21,6 +22,18 @@ services:
      - mongodb
      - initializer
 
+  admin:
+    build: private-services/Admin
+    container_name: "admin"
+    environment:
+     - Settings:MongoDbUri=mongodb://mongodb:27017/registrations; #<-- replace 'localhost' with 'mongodb' - ie: The name of the docker-compose service
+    ports:
+     - 8082:80
+    depends_on:
+     - mongodb
+     - initializer
+
+
   mongodb:
     image: mongo:latest
     container_name: "registration_db"
@@ -30,6 +43,7 @@ services:
     ports:
      - 27017:27017
     #command: mongodb --smallfiles --logpath=/dev/null # --quiet
+
 
   nginx:
     image: nginx:latest

@@ -5,7 +5,8 @@ const url = require('./config/config.js').DB_URI;
 
 class DataConnection {
 
-    insertNewRegistration(name) {
+    insertNewRegistration(registrationModel) {
+        
         MongoClient.connect(url, function(err, db){
             if(err){
                 console.log("Mongo connection error: " + err);
@@ -17,9 +18,7 @@ class DataConnection {
                 let insertRecord = function(){
                     return new Promise(function(resolve, reject){
         
-    
-                        var newRecord = {name: name, city: 'Sherman Oaks', state: 'CA', createdDate: Date.UTC.toString()};
-                        dbo.collection('new').insertOne(newRecord, function(err, res){
+                        dbo.collection('new').insertOne(registrationModel, function(err, res){
                             if(err) throw err;
                             //resolve the promise:
                             resolve("Record created!");

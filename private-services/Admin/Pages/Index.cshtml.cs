@@ -9,9 +9,15 @@ namespace Admin.Pages
 {
     public class IndexModel : PageModel
     {
+        public string applicationName;
+        public string mongoUri;
         public void OnGet()
         {
+            //applicationName = "1";
+            //mongoUri = "2";
 
+            applicationName = AppSettings.ApplicationName;
+            mongoUri = AppSettings.MongoDbUri;
         }
     }
 }

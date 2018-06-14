@@ -14,9 +14,28 @@ namespace Admin
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional:true)
+                .AddEnvironmentVariables(); //<-- Allows for Docker Env Variables
+            Configuration = builder.Build();
+
+            /* Docker Compose Environment Settings:
+                
+                environment:
+                - Settings:MongoDbUri=mongodb://mongodb:27017/registrations;    
+                       
+            */
+
+            AppSettings.ApplicationName = Configuration["Settings:ApplicationName"]; //<-- pulls from json settings
+            AppSettings.MongoDbUri = Configuration["Settings:MongoDbUri"]; //<-- pulls from json settings
+
+            
         }
 
         public IConfiguration Configuration { get; }
@@ -31,6 +50,8 @@ namespace Admin
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //Configure services to use the AppSettings model throught our application
+            //services.Configure<AppSettings>(Configuration.GetSection("SectionName"));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -51,6 +72,7 @@ namespace Admin
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            
 
             app.UseMvc();
         }

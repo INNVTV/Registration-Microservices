@@ -3,9 +3,7 @@
 const express = require('express');
 const app = express();
 
-const registrationModel = require('./models/registration');
-
-const validation = require('./validation');
+const validation = require('./validation.js');
 
 const DataConnection = require('./dataConnection');
 const dataConnection = new DataConnection();
@@ -13,12 +11,33 @@ const dataConnection = new DataConnection();
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    dataConnection.insertNewRegistration('Kazual');
-    res.send('Welcome to the public registration service.');
+    res.send('Welcome to the public registration service!');
 });
 
-app.post('/api/v1/register', (req, res) => {
-    validation.validateRegistration();
+app.get('/api/v1/', (req, res) => {
+    res.send('API: version 1 status.');
+});
+
+app.post('/api/v1/', (req, res) => {
+
+    // Fiddler: Content-Type: application/json; charset=utf-8
+    // Body: {"name":"Name", "email":"name@email.com"}
+
+    const validationResponse = validation.validateRegistration(req);
+
+    if(!validationResponse.isValid){
+        return res.status(400).send(validationResponse);
+    }
+
+    const registrationModel = {
+        name: req.body.name,
+        email: req.body.email,
+        dateCreated: Date.now()
+    };
+
+    dataConnection.insertNewRegistration(registrationModel);
+
+    return res.json(201, registrationModel);
 });
 
 app.listen(3000, () => console.log("'public-endpoints' listening on port 3000"));
