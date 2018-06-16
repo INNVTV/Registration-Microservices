@@ -5,8 +5,9 @@ services:
   initializer:
     build: private-services/background-tasks/initializer
     container_name: "initializer"
-    environment:
-     - MONGO_DB_URI=mongodb://mongodb:27017/registrations; #<-- replace 'localhost' with 'mongodb' - ie: The name of the docker-compose service
+    env_file: .env
+    #environment:
+     #- MONGO_DB_URI=mongodb://mongodb:27017/registrations; #<-- replace 'localhost' with 'mongodb' - ie: The name of the docker-compose service
     depends_on:
      - mongodb
 
@@ -14,8 +15,9 @@ services:
   public-endpoints:
     build: public-services/endpoints
     container_name: "public-endpoints"
-    environment:
-     - MONGO_DB_URI=mongodb://mongodb:27017/registrations; #<-- replace 'localhost' with 'mongodb' - ie: The name of the docker-compose service
+    env_file: .env
+    #environment:
+     #- MONGO_DB_URI=mongodb://mongodb:27017/registrations; #<-- replace 'localhost' with 'mongodb' - ie: The name of the docker-compose service
     ports:
      - 8081:3000
     depends_on:
@@ -25,9 +27,10 @@ services:
   admin:
     build: private-services/Admin
     container_name: "admin"
-    environment:
-      - Settings:ApplicationName=From Compose
-      - Settings:MongoDbUri=mongodb://mongodb:27017/registrations #<-- replace 'localhost' with 'mongodb' - ie: The name of the docker-compose service
+    env_file: .env
+    #environment:
+      #- Settings:ApplicationName=From Compose
+      #- Settings:MongoDbUri=mongodb://mongodb:27017/registrations #<-- replace 'localhost' with 'mongodb' - ie: The name of the docker-compose service
     ports:
      - 8082:80
     depends_on:
@@ -38,9 +41,10 @@ services:
   mongodb:
     image: mongo:latest
     container_name: "registration_db"
-    environment:
-     - MONGO_USER="user"
-     - MONGO_PASS="pass"
+    env_file: .env
+    #environment:
+     #- MONGO_USER="user"
+     #- MONGO_PASS="pass"
     ports:
      - 27017:27017
     #command: mongodb --smallfiles --logpath=/dev/null # --quiet
