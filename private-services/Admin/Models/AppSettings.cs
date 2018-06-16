@@ -4,5 +4,6 @@ namespace Admin
     {
         public static string ApplicationName { get; set; }
         public static string MongoDbUri { get; set; }
+        public static string MongoDbName { get; set; }
     }
 }

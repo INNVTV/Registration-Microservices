@@ -46,7 +46,7 @@ namespace Admin
 
             AppSettings.ApplicationName = Configuration["Settings:ApplicationName"]; //<-- pulls from json settings
             AppSettings.MongoDbUri = Configuration["Settings:MongoDbUri"]; //<-- pulls from json settings
-
+            AppSettings.MongoDbName = Configuration["Settings:MongoDbName"]; //<-- pulls from json settings
             
         }
 
