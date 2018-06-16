@@ -5,5 +5,12 @@
 }
 
 <div>
-    <h2>@Model.newRecords</h2>
+    @{
+        foreach (var item in Model.regRecords)
+        {
+            <h1>@item.Name</h1>
+            <h2>@item.Email</h2>
+            <h3>@item.DateCreated</h3>
+        }
+    }
 </div>

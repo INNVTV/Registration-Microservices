@@ -11,7 +11,7 @@ namespace Admin.Pages
 {
     public class IndexModel : PageModel
     {
-        public string newRecords;
+        public List<RegistrationModel> regRecords;
 
         private IMongoDatabase _database = null;
         public void OnGet()
@@ -20,10 +20,12 @@ namespace Admin.Pages
             var mongoDbName = AppSettings.MongoDbName;
 
             var client = new MongoClient(mongoUri);
+
             if(client != null)
             {
                 _database = client.GetDatabase(mongoDbName);
-                var newRecords =_database.GetCollection<RegistrationModel>("new");
+                var regCollection =_database.GetCollection<RegistrationModel>("new");
+                regRecords = regCollection.Find(r => r.Name == "Kaz").ToList();
             }
         }
     }
