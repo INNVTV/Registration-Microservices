@@ -4,13 +4,60 @@
     ViewData["Title"] = "Home page";
 }
 
-<div>
+<div style="margin-bottom:20px;">Instance: <b>@Admin.AppSettings.InstanceId</b></div>
+
+<div style="margin-bottom:20px;">
     @{
-        foreach (var item in Model.regRecords)
+        if(@Model.filter == "new")
         {
-            <h1>@item.Name</h1>
-            <h2>@item.Email</h2>
-            <h3>@item.DateCreated</h3>
+            <a class="btn btn-primary" href="?filter=new">New</a>
+        }
+        else
+        {
+            <a class="btn btn-default" href="?filter=new">New</a>
+        }
+        if(@Model.filter == "processed")
+        {
+            <a class="btn btn-primary" href="?filter=processed">Processed</a>
+        }
+        else
+        {
+            <a class="btn btn-default" href="?filter=processed">Processed</a>
+        }
+        if(@Model.filter == "rejected")
+        {
+            <a class="btn btn-primary" href="?filter=rejected">Rejected</a>
+        }
+        else
+        {
+            <a class="btn btn-default" href="?filter=rejected">Rejected</a>
         }
     }
 </div>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="hidden-xs">Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th class="hidden-xs">Date Created</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var item in Model.regRecords)
+            {
+                <tr>
+                    <td class="hidden-xs">@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Email</td>
+                    <td class="hidden-xs">@item.DateCreated</td>
+                </tr>
+             }
+        }
+    </tbody>
+</table>
+

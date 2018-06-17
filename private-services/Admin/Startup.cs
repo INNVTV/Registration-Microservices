@@ -48,6 +48,8 @@ namespace Admin
             AppSettings.MongoDbUri = Configuration["Settings:MongoDbUri"]; //<-- pulls from json settings
             AppSettings.MongoDbName = Configuration["Settings:MongoDbName"]; //<-- pulls from json settings
             
+            // Get instance id:
+            AppSettings.InstanceId = 0;
         }
 
         public IConfiguration Configuration { get; }
