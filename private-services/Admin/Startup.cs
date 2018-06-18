@@ -37,7 +37,7 @@ namespace Admin
             Docker Run:
                 -e Settings:MongoDbUri=mongodb://dockerrun:27017/registrations
 
-            docker-compose:                
+            Docker Compose or .env file:              
                 environment:
                  - Settings:ApplicationName=From Compose
                  - Settings:MongoDbUri=mongodb://mongodb:27017/registrations   
