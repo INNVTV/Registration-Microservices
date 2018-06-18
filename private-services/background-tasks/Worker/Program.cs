@@ -32,7 +32,7 @@ namespace Worker
             Docker Run:
                 $ docker run -e Settings:ConfigurationSource=DockerRun worker
 
-            Docker Compose:
+            Docker Compose or .env file:
                 environment:
                  - Settings:ConfigurationSource=DockerCompose
 
