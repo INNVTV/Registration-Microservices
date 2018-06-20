@@ -1,0 +1,17 @@
+extends _layout.pug
+
+block content
+    div(style='margin-top:40px;')
+        .panel.panel-success
+         .panel-heading
+          b
+           | Success!
+         .panel-body
+          p
+           | Your registration has been submitted.
+          p
+           | Name: !{name} | Email: !{email}
+          p
+           | Once the worker role picks up your registration it will either be processed or rejected.
+          p
+           | Use the admin tool to view progress. 

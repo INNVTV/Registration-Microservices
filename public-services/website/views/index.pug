@@ -1,6 +1,20 @@
 extends _layout.pug
 
 block content
-    .container
-        h1=message
-        p=copy
+        h2=message
+        
+        each val in errors
+         div.alert.alert-danger val
+         
+        p
+         | This is a group of microservices
+         | running on Node, .Net Core, Docker, Nginx and MongoDB
+        div(style='width:300px')
+         form.form-sign(method="post", action="/")
+          label Name:
+          input.form-control(type="text" name="name" value=name)
+          div.form-group
+          label Email:
+          input.form-control(type="text" name="email" value=email)
+          div.form-group
+          input.btn.btn-primary(type="submit", value="Submit")
