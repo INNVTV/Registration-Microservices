@@ -26,7 +26,7 @@ app.post('/api/v1/', (req, res) => {
     const validationResponse = validation.validateRegistration(req);
 
     if(!validationResponse.isValid){
-        return res.status(400).send(validationResponse);
+        return res.status(400).json(validationResponse);
     }
 
     const registrationModel = {
