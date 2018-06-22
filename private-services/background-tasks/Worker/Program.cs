@@ -1,15 +1,19 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.EnvironmentVariables;
+using MongoDB.Driver;
+using MongoDB.Driver.Core;
+using MongoDB.Bson;
 
 namespace Worker
 {
     class Program
     {
-        private string _mongoUri;
-        private string _mongoDbName;
+        private static string _mongoUri;
+        private static string _mongoDbName;
 
         static void Main(string[] args)
         {
@@ -21,8 +25,8 @@ namespace Worker
 
             IConfigurationRoot configuration = builder.Build();
 
-            var _mongoUri = configuration["Settings:MongoDbUri"];
-            var _mongoDbName = configuration["Settings:MongoDbName"];
+            _mongoUri = configuration["Settings:MongoDbUri"];
+            _mongoDbName = configuration["Settings:MongoDbName"];
             var configSource = configuration["Settings:ConfigurationSource"];
 
             /*
@@ -54,7 +58,32 @@ namespace Worker
 
         public static void ProcessRegistrations()
         {       
-            Console.WriteLine("Worker: Processing...");
+            Console.WriteLine("Processing registrations...");
+
+            var client = new MongoClient(_mongoUri);
+
+            //Pick up all latest new registrations
+            if(client != null)
+            {
+                var _database = client.GetDatabase(_mongoDbName);
+                var newCollection =_database.GetCollection<BsonDocument>("new");
+                var regRecords = newCollection.Find(_ => true).ToList();
+
+                var processedCollection =_database.GetCollection<BsonDocument>("processed");
+                var rejectedCollection =_database.GetCollection<BsonDocument>("rejected");
+
+                //Place 90% of registrations into 'processed' collection and 10% into the 'rejected' collection
+                foreach(var regRecord in regRecords)
+                {
+                    processedCollection.InsertOne(regRecord);
+
+                    //remove the record from the origin collection:
+                    newCollection.DeleteOne(regRecord);
+                }
+                
+            }
+
+           
         }
     }
 }

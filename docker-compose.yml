@@ -24,6 +24,19 @@ services:
      - mongodb
      - initializer
 
+  public-website:
+    build: public-services/website
+    container_name: "public-website"
+    env_file: .env
+    #environment: (Moved to .env file)
+     #- MONGO_DB_URI=mongodb://mongodb:27017/registrations; #<-- replace 'localhost' with 'mongodb' - ie: The name of the docker-compose service
+    ports:
+     - 8082:3000
+    depends_on:
+     - mongodb
+     - initializer
+     - public-endpoints
+
   admin:
     build: private-services/Admin
     container_name: "admin"
@@ -32,7 +45,7 @@ services:
       #- Settings:ApplicationName=From Compose
       #- Settings:MongoDbUri=mongodb://mongodb:27017 #<-- replace 'localhost' with 'mongodb' - ie: The name of the docker-compose service
     ports:
-     - 8082:80
+     - 8083:80
     depends_on:
      - mongodb
      - initializer
@@ -71,5 +84,5 @@ services:
      - worker
      - admin
      - public-endpoints
-     #- public-webite
+     - public-website
   

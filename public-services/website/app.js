@@ -83,65 +83,12 @@ app.post('/', (req, res) => {
             });
         }
       });
-/*
-    request.post(
-        apiUri,
-        data,  
-        function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                console.log(body);
-            }
-            else{
-                console.log(body);
-                console.log(apiUri + "-" + data);
-            }
-        }
-    );*/
-
-    /*
-
-    const options = {
-        host: apiUri,
-        port: apiPort,
-        path: '/',
-        method:'POST',
-        headers:{
-            'Content-Type':'application/json; charset=utf-8',
-            'Content-Length': data.length
-        }
-    };
-
-    let httpRequest = http.request(options, function(httpResponse){
-        let msg = '';
-        httpResponse.setEncoding('utf8');
-        httpResponse.on('data', function(chunk) {
-            msg += chunk;
-        });
-    });
-
-    httpRequest.write(data);
-    httpRequest.end();
-    */
-
-    //res.render('index', { name: 'message' });
-
-    /*
-    res.render('success', {
-        name: req.body.name,
-        email: req.body.email,
-        year: new Date().getFullYear()
-    });
-
-    errorsArray = ['1', '2', '3'];
-
-    res.render('index', {
-        errors: errorsArray,
-        title: title,
-        message: message,
-        year: new Date().getFullYear(),
-        name: req.body.name,
-        email: req.body.email
-    });*/
 });
+
+app.get('/settings', (req, res) => {
+    res.render('settings', {
+       api:apiUri 
+    });
+  });
 
 app.listen(3000, () => console.log("'public-website' listening on port 3000"));
