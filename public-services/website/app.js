@@ -48,6 +48,7 @@ app.post('/', (req, res) => {
 
     request.post({
         headers: {'content-type' : 'application/json'},
+        proxy: 'http://xx.xxx.xxx.xx',
         url: apiUri,
         body: data,
         length: data.length
@@ -59,12 +60,23 @@ app.post('/', (req, res) => {
                     year: new Date().getFullYear()
             });
         }
-        else if(response.statusCode == 400)
+        else if(!error && response.statusCode == 400)
         {
             var validationResponse = JSON.parse(body);
 
             res.render('index', {
                 errors: validationResponse.errors,
+                title: title,
+                message: message,
+                year: new Date().getFullYear(),
+                name: req.body.name,
+                email: req.body.email
+            });
+        }
+        else if(error)
+        {
+            res.render('index', {
+                errors: [ error ],
                 title: title,
                 message: message,
                 year: new Date().getFullYear(),

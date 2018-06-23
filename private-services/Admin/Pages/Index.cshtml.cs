@@ -30,7 +30,7 @@ namespace Admin.Pages
 
             if(client != null)
             {
-                var _database = client.GetDatabase(mongoDbName);
+                _database = client.GetDatabase(mongoDbName);
                 var regCollection =_database.GetCollection<RegistrationModel>(filter);
                 regRecords = regCollection.Find(_ => true).ToList();
                 //regRecords = regCollection.Find(r => r.Name == "Name").ToList();

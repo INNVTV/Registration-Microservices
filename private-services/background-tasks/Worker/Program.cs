@@ -72,10 +72,17 @@ namespace Worker
                 var processedCollection =_database.GetCollection<BsonDocument>("processed");
                 var rejectedCollection =_database.GetCollection<BsonDocument>("rejected");
 
-                //Place 90% of registrations into 'processed' collection and 10% into the 'rejected' collection
+                //Place 80% of registrations into 'processed' collection and 20% into the 'rejected' collection
                 foreach(var regRecord in regRecords)
                 {
-                    processedCollection.InsertOne(regRecord);
+                    int rand = new Random().Next(10); // Random number 0-9
+
+                    if(rand <= 7) {
+                        processedCollection.InsertOne(regRecord);
+                    }
+                    else{
+                        rejectedCollection.InsertOne(regRecord);
+                    }
 
                     //remove the record from the origin collection:
                     newCollection.DeleteOne(regRecord);
