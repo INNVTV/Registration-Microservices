@@ -5,8 +5,8 @@ services:
   initializer:
     build: private-services/background-tasks/initializer
     container_name: "initializer"
-    networks:
-     - privatenet
+    #networks:
+     #- privatenet
     env_file: .env
     #environment: (Moved to .env file)
      #- MONGO_DB_URI=mongodb://mongodb:27017/registrations; #<-- replace 'localhost' with 'mongodb' - ie: The name of the docker-compose service
@@ -22,8 +22,8 @@ services:
      #- MONGO_DB_URI=mongodb://mongodb:27017/registrations; #<-- replace 'localhost' with 'mongodb' - ie: The name of the docker-compose service
     ports:
      - 8081:3000
-    networks:
-     - publicnet
+    #networks:
+     #- publicnet
     depends_on:
      - mongodb
      - initializer
@@ -36,8 +36,8 @@ services:
      #- MONGO_DB_URI=mongodb://mongodb:27017/registrations; #<-- replace 'localhost' with 'mongodb' - ie: The name of the docker-compose service
     ports:
      - 8082:3000
-    networks:
-     - publicnet
+    #networks:
+     #- publicnet
     depends_on:
      - mongodb
      - initializer
@@ -52,8 +52,8 @@ services:
       #- Settings:MongoDbUri=mongodb://mongodb:27017 #<-- replace 'localhost' with 'mongodb' - ie: The name of the docker-compose service
     ports:
      - 8083:80
-    networks:
-     - privatenet
+    #networks:
+     #- privatenet
     depends_on:
      - mongodb
      - initializer
@@ -66,8 +66,8 @@ services:
     depends_on:
      - mongodb
      - initializer
-    networks:
-     - privatenet
+    #networks:
+     #- privatenet
 
   mongodb:
     image: mongo:latest
@@ -78,9 +78,9 @@ services:
      #- MONGO_PASS="pass"
     ports:
      - 27017:27017
-    networks:
-     - publicnet
-     - privatenet
+    #networks:
+     #- publicnet
+     #- privatenet
     #command: mongodb --smallfiles --logpath=/dev/null # --quiet
 
 
@@ -88,8 +88,8 @@ services:
     image: nginx:latest
     ports:
      - "8080:8080"
-    networks:
-     - publicnet
+    #networks:
+     #- publicnet
     volumes:
      - ./nginx/public:/srv/www/static
      - ./nginx/config/default.conf:/etc/nginx/conf.d/default.conf
@@ -101,9 +101,9 @@ services:
      - public-endpoints
      - public-website
 
-networks:
- publicnet:
+#networks:
+ #publicnet:
   #driver: driver-1
- privatenet:
+ #privatenet:
  # driver: driver-2
   
