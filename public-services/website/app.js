@@ -19,6 +19,7 @@ app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
 
 const apiUri = require('./config/config.js').API_URI;
+const proxyUri = require('./config/config.js').PROXY_URI;
 
 const title = 'Registration Microservices';
 const message = 'Please register your account';
@@ -46,9 +47,18 @@ app.post('/', (req, res) => {
         email: req.body.email
     });
 
+    console.log("data:" + data)
+    console.log()
+    console.log("uri:" + apiUri)
+    console.log()
+    console.log("uri:" + apiUri)
+    console.log()
+    console.log("proxy:" + proxyUri)
+    console.log()
+
     request.post({
         headers: {'content-type' : 'application/json'},
-        proxy: 'http://xx.xxx.xxx.xx',
+        proxy: proxyUri,
         url: apiUri,
         body: data,
         length: data.length
@@ -75,6 +85,8 @@ app.post('/', (req, res) => {
         }
         else if(error)
         {
+            console.log("error:" + error)
+
             res.render('index', {
                 errors: [ error ],
                 title: title,
@@ -99,7 +111,8 @@ app.post('/', (req, res) => {
 
 app.get('/settings', (req, res) => {
     res.render('settings', {
-       api:apiUri 
+       api:apiUri,
+       proxy:proxyUri 
     });
   });
 
